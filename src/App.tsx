@@ -72,7 +72,10 @@ function App() {
                 title={tl.title}
                 tasks={getTasksForTodolist(tl)}
                 removeTask={removeTask}
-                removeTodoList={removeTodoList} />
+                removeTodoList={removeTodoList}
+                changeTaskTitle={changeTaskTitle}
+                />
+                
         )
     })
 
@@ -116,6 +119,11 @@ function App() {
         setTodoLists([...todoLists, newTodoList])
         setTasks({ ...tasks, [newTodoListId]: [] })
     }
+    function changeTaskTitle(taskID: string, newTitle:string , todoListID: string) {
+        tasks[todoListID] = tasks[todoListID].map(t => t.id === taskID ? { ...t, title:newTitle} : t)
+        setTasks({ ...tasks })
+    }
+    
 }
 
 
