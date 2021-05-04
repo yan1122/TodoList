@@ -46,7 +46,7 @@ function App() {
         ]
     })
 
-    function getTasksForTodolist(todoList:TodolistType) {
+    function getTasksForTodolist(todoList: TodolistType) {
         switch (todoList.filter) {
             case "active":
                 return tasks[todoList.id].filter(t => !t.isDone)
@@ -57,10 +57,10 @@ function App() {
         }
     }
 
-   
+
 
     const todoListsComponents = todoLists.map(tl => {
-        
+
         return (
             <TodoList
                 key={tl.id}
@@ -92,7 +92,7 @@ function App() {
             title,
             isDone: false
         }
-        setTasks({ ...tasks, [todoListID]: [newTask,...tasks[todoListID]] })
+        setTasks({ ...tasks, [todoListID]: [newTask, ...tasks[todoListID]] })
     }
     function changeTaskStatus(taskID: string, newIsDone: boolean, todoListID: string) {
         tasks[todoListID] = tasks[todoListID].map(t => t.id === taskID ? { ...t, isDone: newIsDone } : t)
@@ -100,22 +100,23 @@ function App() {
     }
     function changeFilter(value: filtersValueType, todoListID: string) {
         setTodoLists(todoLists.map(tl => tl.id === todoListID ? { ...tl, filter: value } : tl)
-        )}
-    function removeTodoList(todoListID:string){
-        setTodoLists(todoLists.filter(tl => tl.id!== todoListID))
+        )
+    }
+    function removeTodoList(todoListID: string) {
+        setTodoLists(todoLists.filter(tl => tl.id !== todoListID))
         delete tasks[todoListID]
     }
-    function addTodoList (title:string) {
+    function addTodoList(title: string) {
         const newTodoListId = v1()
-        const newTodoList:TodolistType = {
-            id:newTodoListId,
+        const newTodoList: TodolistType = {
+            id: newTodoListId,
             title,
-            filter:('all'),
+            filter: ('all'),
         }
-            setTodoLists([...todoLists,newTodoList])
-            setTasks({...tasks,[newTodoListId]:[]})
-        }
+        setTodoLists([...todoLists, newTodoList])
+        setTasks({ ...tasks, [newTodoListId]: [] })
     }
+}
 
 
 export default App;
