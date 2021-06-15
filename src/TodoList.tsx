@@ -16,6 +16,7 @@ type TodoListPropsType = {
     changeTaskStatus: (taskID: string, newIsDone: boolean, todoListID: string) => void
     removeTodoList: (todoListID: string) => void
     changeTaskTitle:(taskID: string, newTitle:string , todoListID: string) => void
+    changeTodoListTitle:(todoListID:string, newTitle:string ) => void
 }
 
 
@@ -42,15 +43,16 @@ function TodoList(props: TodoListPropsType) {
     const onClickCompletedButton = () => props.changeFilter("completed", props.todoListID)
     const addTask = (title: string) => props.addTask(title, props.todoListID)
     const onClickRemoveTodolist = () => props.removeTodoList(props.todoListID)
+    const changeTodoListTitle =(title:string) => props.changeTodoListTitle(props.todoListID,title)
 
 
 
     return (
         <div className="TodoList">
             <div>
-                <h3>{props.title}
+                <EditableSpan title={props.title} changeTitle={changeTodoListTitle} />
                     <IconButton onClick={onClickRemoveTodolist}> <Delete/> </IconButton>
-                </h3>
+
 
                 <div>
                     <AddItemForm addItem={addTask} />
@@ -59,9 +61,9 @@ function TodoList(props: TodoListPropsType) {
                     {tasks}
                 </div>
                 <div>
-                    <Button variant={props.filter === 'all' ? "contained" : 'outlined'} onClick={onClickAllButton}>All</Button>
-                    <Button variant={props.filter === 'active' ? "contained" : 'outlined'}  onClick={onClickActiveButton}>Active</Button>
-                    <Button  variant={props.filter === 'completed' ? "contained" : 'outlined'} onClick={onClickCompletedButton}>Completed</Button>
+                    <Button color={props.filter === 'all' ? "primary" : 'default'} variant={props.filter === 'all' ? "contained" : 'outlined'} onClick={onClickAllButton}>All</Button>
+                    <Button color={props.filter === 'active' ? "primary" : 'default'} variant={props.filter === 'active' ? "contained" : 'outlined'}  onClick={onClickActiveButton}>Active</Button>
+                    <Button color={props.filter === 'completed' ? "primary" : 'default'}  variant={props.filter === 'completed' ? "contained" : 'outlined'} onClick={onClickCompletedButton}>Completed</Button>
                 </div>
             </div>
         </div>

@@ -15,7 +15,7 @@ export type TaskType = {
 export type filtersValueType = "all" | "active" | "completed"
 
 
-type TodolistType = {
+export type TodolistType = {
     id: string
     title: string
     filter: filtersValueType
@@ -30,7 +30,7 @@ function App() {
     const todoList_Id2 = v1()
 
 
-    const [todoLists, setTodoLists] = useState<Array<TodolistType>>([
+    let [todoLists, setTodoLists] = useState<Array<TodolistType>>([
         {id: todoList_Id1, title: 'What to learn', filter: 'all'},
         {id: todoList_Id2, title: 'What to buy', filter: 'all'},
     ])
@@ -77,6 +77,7 @@ function App() {
                     removeTask={removeTask}
                     removeTodoList={removeTodoList}
                     changeTaskTitle={changeTaskTitle}
+                    changeTodoListTitle={changeTodoListTitle}
                 />
                 </Paper>
             </Grid>
@@ -127,6 +128,16 @@ function App() {
         setTasks({...tasks})
     }
 
+    function changeTaskTitle(taskID: string, newTitle: string, todoListID: string) {
+        tasks[todoListID] = tasks[todoListID].map(t => t.id === taskID ? {...t, title: newTitle} : t)
+        setTasks({...tasks})
+    }
+
+    function changeTodoListTitle(todoListID:string, newTitle:string ){
+        todoLists = todoLists.map(td => td.id === todoListID ? {...td,title:newTitle} : td)
+        setTodoLists(todoLists)
+    }
+
     function changeFilter(value: filtersValueType, todoListID: string) {
         setTodoLists(todoLists.map(tl => tl.id === todoListID ? {...tl, filter: value} : tl)
         )
@@ -148,10 +159,6 @@ function App() {
         setTasks({...tasks, [NewTodoListId]: []})
     }
 
-    function changeTaskTitle(taskID: string, newTitle: string, todoListID: string) {
-        tasks[todoListID] = tasks[todoListID].map(t => t.id === taskID ? {...t, title: newTitle} : t)
-        setTasks({...tasks})
-    }
 
 }
 
